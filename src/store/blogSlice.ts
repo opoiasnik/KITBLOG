@@ -14,15 +14,15 @@ import {
 import { db } from '@/lib/firebase';
 import { BlogPost, Comment, CreatePostData, UpdatePostData, CreateCommentData, FilterOptions, BlogState } from '@/types';
 
-// Вспомогательные функции для преобразования данных
+
 const convertTimestampToDate = (timestamp: unknown): Date => {
   if (timestamp && typeof timestamp === 'object' && 'toDate' in timestamp) {
-    // Создаем новый Date объект из Firebase Timestamp для обеспечения сериализации
+    
     const firebaseDate = (timestamp as { toDate(): Date }).toDate();
     return new Date(firebaseDate.getTime());
   }
   if (timestamp instanceof Date) {
-    // Если уже Date, создаем новый чистый Date объект
+    
     return new Date(timestamp.getTime());
   }
   if (typeof timestamp === 'string' || typeof timestamp === 'number') {
@@ -59,7 +59,7 @@ const convertCommentFromFirestore = (doc: { id: string; data: () => Record<strin
   };
 };
 
-// Асинхронные thunks
+
 export const fetchPosts = createAsyncThunk(
   'blog/fetchPosts',
   async (filterOptions?: FilterOptions) => {
@@ -76,7 +76,7 @@ export const fetchPosts = createAsyncThunk(
     const querySnapshot = await getDocs(q);
     let posts = querySnapshot.docs.map(convertPostFromFirestore);
     
-    // Фильтрация по тегам и поиску на клиенте
+    
     if (filterOptions?.tags && filterOptions.tags.length > 0) {
       posts = posts.filter(post => 
         filterOptions.tags!.some(tag => post.tags.includes(tag))
@@ -193,7 +193,7 @@ export const createComment = createAsyncThunk(
   }
 );
 
-// Начальное состояние
+
 const initialState: BlogState = {
   posts: [],
   comments: [],
@@ -203,7 +203,7 @@ const initialState: BlogState = {
   filter: {}
 };
 
-// Slice
+
 const blogSlice = createSlice({
   name: 'blog',
   initialState,
@@ -223,7 +223,7 @@ const blogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch posts
+      
       .addCase(fetchPosts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -237,7 +237,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch posts';
       })
       
-      // Fetch post by ID
+      
       .addCase(fetchPostById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -251,7 +251,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch post';
       })
       
-      // Create post
+      
       .addCase(createPost.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -265,7 +265,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to create post';
       })
       
-      // Update post
+      
       .addCase(updatePost.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -286,7 +286,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to update post';
       })
       
-      // Delete post
+      
       .addCase(deletePost.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -303,7 +303,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to delete post';
       })
       
-      // Fetch comments
+      
       .addCase(fetchComments.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -317,7 +317,7 @@ const blogSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch comments';
       })
       
-      // Create comment
+      
       .addCase(createComment.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -334,4 +334,4 @@ const blogSlice = createSlice({
 });
 
 export const { clearError, setCurrentPost, setFilter, clearFilter } = blogSlice.actions;
-export default blogSlice.reducer; 
+export default blogSlice.reducer;

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth, isGuestUser } from '@/contexts/AuthContext';
 import { User, LogOut, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 
 export default function UserProfile() {
     const { user, logout } = useAuth();
@@ -99,17 +100,35 @@ export default function UserProfile() {
                             </div>
                         </div>
                     </div>
+
+                    <nav className="md:hidden p-2 border-b border-gray-700 flex flex-col gap-1">
+                        {[
+                            { key: '/blog', label: 'Blog', path: '/blog' },
+                            { key: '/tags', label: 'Tags', path: '/tags' },
+                            { key: '/projects', label: 'Projects', path: '/projects' },
+                            { key: '/about', label: 'About', path: '/about' },
+                        ].map(item => (
+                            <Link
+                                key={item.key}
+                                href={item.path}
+                                onClick={() => setIsDropdownOpen(false)}
+                                className="w-full px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-sm"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
                     <div className="p-2">
                         <button
                             onClick={handleLogout}
                             className="w-full flex items-center gap-2 px-3 py-2 text-left text-red-400 hover:bg-gray-700 rounded-lg transition-colors"
                         >
                             <LogOut className="w-4 h-4" />
-                            {isGuest ? 'Выйти из гостевого режима' : 'Выйти'}
+                            {isGuest ? 'Exit from Guest mode' : 'Exit'}
                         </button>
                     </div>
                 </div>
             )}
         </div>
     );
-} 
+}

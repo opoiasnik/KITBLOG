@@ -10,10 +10,10 @@ export default function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Profile Section */}
+
                 <div className="lg:col-span-1">
                     <div className="text-center">
-                        {/* Avatar */}
+
                         <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
                             <div className="text-white text-4xl">
                                 🤖
@@ -24,7 +24,7 @@ export default function AboutPage() {
                         <p className="text-gray-400 mb-4">Professor of Atmospheric Science</p>
                         <p className="text-gray-400 mb-6">Stanford University</p>
 
-                        {/* Social Links */}
+
                         <div className="flex justify-center gap-4">
                             <a
                                 href="mailto:contact@example.com"
@@ -33,19 +33,19 @@ export default function AboutPage() {
                                 <Mail className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://github.com"
+                                href="https://github.com/your-profile"
                                 className="p-2 text-gray-400 hover:text-white transition-colors"
                             >
                                 <Github className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://linkedin.com"
+                                href="https://linkedin.com/in/your-profile"
                                 className="p-2 text-gray-400 hover:text-white transition-colors"
                             >
                                 <Linkedin className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://twitter.com"
+                                href="https://twitter.com/your-profile"
                                 className="p-2 text-gray-400 hover:text-white transition-colors"
                             >
                                 <Twitter className="w-5 h-5" />
@@ -54,7 +54,7 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* Content Section */}
+
                 <div className="lg:col-span-2 space-y-6">
                     <div>
                         <p className="text-gray-300 leading-relaxed mb-4">
@@ -79,4 +79,4 @@ export default function AboutPage() {
             </div>
         </div>
     );
-} 
+}

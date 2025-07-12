@@ -17,16 +17,16 @@ export default function BlogPage() {
     const [searchTerm] = useState('');
     const [filterKey, setFilterKey] = useState(0);
 
-    // Загружаем все посты при загрузке компонента
+    
     useEffect(() => {
         dispatch(fetchPosts());
     }, [dispatch]);
 
-    // Фильтруем посты на клиенте
+    
     const filteredPosts = useMemo(() => {
         let filtered = posts;
 
-        // Применяем фильтры из Redux store
+        
         if (filter.isPublished !== undefined) {
             filtered = filtered.filter(post => post.isPublished === filter.isPublished);
         }
@@ -41,7 +41,7 @@ export default function BlogPage() {
             );
         }
 
-        // Применяем поиск
+        
         if (searchTerm) {
             const searchLower = searchTerm.toLowerCase();
             filtered = filtered.filter(post =>
@@ -55,7 +55,7 @@ export default function BlogPage() {
         return filtered;
     }, [posts, filter, searchTerm]);
 
-    // Сбрасываем пагинацию при изменении фильтров или поиска
+    
     useEffect(() => {
         setFilterKey(prev => prev + 1);
     }, [filter, searchTerm]);
@@ -67,14 +67,14 @@ export default function BlogPage() {
     };
 
     const handleFilterChange = () => {
-        // Callback для изменений фильтров
+        
     };
 
     return (
-        <div className="flex min-h-screen">
-            <Sidebar 
-                onClick={onSidebarToggle} 
-                onFilterChange={handleFilterChange} 
+        <div className="flex min-h-screen overflow-x-hidden">
+            <Sidebar
+                onClick={onSidebarToggle}
+                onFilterChange={handleFilterChange}
                 isOpen={isSidebarOpen}
             />
             <PostGrid
@@ -86,4 +86,4 @@ export default function BlogPage() {
             />
         </div>
     );
-} 
+}

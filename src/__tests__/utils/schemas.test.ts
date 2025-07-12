@@ -191,7 +191,7 @@ describe('Validation Schemas', () => {
     test('should reject comment with missing fields', () => {
       const invalidCommentData = {
         postId: 'test-post-id',
-        // Missing author and content
+        
       };
 
       const result = createCommentSchema.safeParse(invalidCommentData);
@@ -201,4 +201,4 @@ describe('Validation Schemas', () => {
       }
     });
   });
-}); 
+});

@@ -23,10 +23,10 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
     const [tags, setTags] = useState<string[]>(post?.tags || []);
     const [tagInput, setTagInput] = useState('');
 
-    // Определяем автора для нового поста
+    
     const isGuest = user ? isGuestUser(user) : false;
     const defaultAuthor = post?.author ||
-        (isGuest ? 'Гость' :
+        (isGuest ? 'Guest' :
             (user?.displayName || user?.email?.split('@')[0] || ''));
 
     const {
@@ -46,10 +46,10 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
         }
     });
 
-    // Автоматически заполняем автора для новых постов
+    
     useEffect(() => {
         if (!post && user) {
-            const authorName = isGuest ? 'Гость' :
+            const authorName = isGuest ? 'Guest' :
                 (user.displayName || user.email?.split('@')[0] || '');
             setValue('author', authorName);
         }
@@ -106,7 +106,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
 
     return (
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 shadow-xl">
-            <div className="p-8">
+            <div className="p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-8">
                     <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
                         <Save className="h-5 w-5 text-white" />
@@ -120,11 +120,11 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                             <div className="flex items-center gap-2">
                                 {isGuest && <User className="w-4 h-4" />}
                                 <span className="text-blue-400">
-                                    {isGuest ? 'Гость' : (user.displayName || user.email)}
+                                    {isGuest ? 'Guest' : (user.displayName || user.email)}
                                 </span>
                                 {isGuest && (
                                     <span className="text-xs bg-gray-700 px-2 py-1 rounded">
-                                        Гостевой режим
+                                        Guest mode
                                     </span>
                                 )}
                             </div>
@@ -132,18 +132,18 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                     )}
                 </div>
 
-                {/* Guest User Notice */}
+                
                 {isGuest && (
                     <div className="mb-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-xl">
                         <div className="flex items-center gap-3">
                             <User className="w-5 h-5 text-blue-400 flex-shrink-0" />
                             <div>
                                 <p className="text-blue-300 text-sm font-medium">
-                                    Вы создаете пост как гость
+                                    You are creating a post as a guest
                                 </p>
                                 <p className="text-blue-400/70 text-xs mt-1">
-                                    Ваш пост будет сохранен с автором «Гость».
-                                    Войдите через Google или GitHub для персонализации.
+                                    Your post will be saved with author &quot;Guest&quot;.
+                                    Sign in with Google or GitHub to personalize.
                                 </p>
                             </div>
                         </div>
@@ -151,7 +151,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                    {/* Title */}
+                    
                     <div>
                         <label className="block text-sm font-medium text-gray-300 mb-3">
                             Title *
@@ -170,7 +170,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         )}
                     </div>
 
-                    {/* Author */}
+                    
                     <div>
                         <label className="block text-sm font-medium text-gray-300 mb-3">
                             Author *
@@ -180,7 +180,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                             type="text"
                             className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                             placeholder="Enter author name"
-                            readOnly={!post && !!user} // Только для чтения для новых постов от авторизованных пользователей
+                            readOnly={!post && !!user} 
                         />
                         {errors.author && (
                             <p className="mt-2 text-sm text-red-400 flex items-center gap-2">
@@ -191,14 +191,14 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         {!post && user && (
                             <p className="mt-2 text-sm text-gray-400">
                                 {isGuest
-                                    ? 'Автор установлен как «Гость» для гостевого режима'
+                                    ? 'Author set to &quot;Guest&quot; in guest mode'
                                     : 'Author is automatically set based on your profile'
                                 }
                             </p>
                         )}
                     </div>
 
-                    {/* Excerpt */}
+                    
                     <div>
                         <label className="block text-sm font-medium text-gray-300 mb-3">
                             Excerpt *
@@ -217,7 +217,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         )}
                     </div>
 
-                    {/* Tags */}
+                    
                     <div>
                         <label className="block text-sm font-medium text-gray-300 mb-3">
                             Tags
@@ -264,7 +264,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         )}
                     </div>
 
-                    {/* Content */}
+                    
                     <div>
                         <label className="block text-sm font-medium text-gray-300 mb-3">
                             Content *
@@ -283,7 +283,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         )}
                     </div>
 
-                    {/* Publish */}
+                    
                     <div className="p-4 bg-gray-900/30 rounded-xl border border-gray-700/50">
                         <label className="flex items-center gap-3 cursor-pointer group">
                             <input
@@ -297,7 +297,7 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
                         </label>
                     </div>
 
-                    {/* Buttons */}
+                    
                     <div className="flex justify-end gap-4 pt-6 border-t border-gray-700/50">
                         <button
                             type="button"
@@ -328,4 +328,4 @@ export default function PostForm({ post, onCancel, onSuccess }: PostFormProps) {
             </div>
         </div>
     );
-} 
+}

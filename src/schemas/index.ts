@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// Schema for creating a post
+
 export const createPostSchema = z.object({
   title: z.string()
     .min(1, 'Title is required')
@@ -19,7 +19,7 @@ export const createPostSchema = z.object({
   isPublished: z.boolean()
 });
 
-// Schema for updating a post
+
 export const updatePostSchema = z.object({
   title: z.string()
     .min(1, 'Title is required')
@@ -39,7 +39,7 @@ export const updatePostSchema = z.object({
   isPublished: z.boolean().optional()
 });
 
-// Schema for creating a comment
+
 export const createCommentSchema = z.object({
   postId: z.string().min(1, 'Post ID is required'),
   author: z.string()
@@ -50,7 +50,7 @@ export const createCommentSchema = z.object({
     .max(1000, 'Comment cannot be longer than 1000 characters')
 });
 
-// Schema for filtering posts
+
 export const filterPostsSchema = z.object({
   tags: z.array(z.string()).optional(),
   author: z.string().optional(),
@@ -58,8 +58,8 @@ export const filterPostsSchema = z.object({
   searchTerm: z.string().optional()
 });
 
-// Types inferred from schemas
+
 export type CreatePostFormData = z.infer<typeof createPostSchema>;
 export type UpdatePostFormData = z.infer<typeof updatePostSchema>;
 export type CreateCommentFormData = z.infer<typeof createCommentSchema>;
-export type FilterPostsFormData = z.infer<typeof filterPostsSchema>; 
+export type FilterPostsFormData = z.infer<typeof filterPostsSchema>;

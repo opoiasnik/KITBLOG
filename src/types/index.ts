@@ -62,4 +62,4 @@ export interface BlogState {
 export interface FirebaseError {
   code: string;
   message: string;
-} 
+}

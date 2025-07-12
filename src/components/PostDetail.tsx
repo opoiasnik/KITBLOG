@@ -14,7 +14,7 @@ interface PostDetailProps {
     post: BlogPost;
     onEdit: (post: BlogPost) => void;
     onClose: () => void;
-    onPostUpdate?: () => void; // Добавляем колбэк для обновления данных
+    onPostUpdate?: () => void;
 }
 
 export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: PostDetailProps) {
@@ -82,11 +82,9 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                     }
                 })).unwrap();
 
-                // Показываем уведомление об успехе
                 setShowPublishSuccess(true);
                 setTimeout(() => setShowPublishSuccess(false), 3000);
 
-                // Обновляем данные через колбэк
                 if (onPostUpdate) {
                     onPostUpdate();
                 }
@@ -100,7 +98,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
 
     return (
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 shadow-xl">
-            {/* Success Notification */}
+            
             {showPublishSuccess && (
                 <div className="bg-green-500/20 border border-green-500/30 text-green-400 px-6 py-4 rounded-t-xl">
                     <div className="flex items-center gap-2">
@@ -110,7 +108,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                 </div>
             )}
             <div className="p-8">
-                {/* Header and Actions */}
+                
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6 mb-8">
                     <div className="flex-1">
                         <h1 className="text-4xl font-bold text-white mb-4 leading-tight">{post.title}</h1>
@@ -132,7 +130,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                         </div>
                     </div>
                     <div className="flex gap-3 flex-wrap">
-                        {/* Publish Button for Draft Posts */}
+                        
                         {!post.isPublished && (
                             <button
                                 onClick={handlePublishPost}
@@ -180,7 +178,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                     </div>
                 </div>
 
-                {/* Tags */}
+                
                 {post.tags.length > 0 && (
                     <div className="flex items-center gap-3 mb-8">
                         <Tag className="h-5 w-5 text-gray-400" />
@@ -197,12 +195,12 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                     </div>
                 )}
 
-                {/* Excerpt */}
+                
                 <div className="mb-8 p-6 bg-gray-900/30 rounded-xl border border-gray-700/50">
                     <p className="text-gray-300 italic text-lg leading-relaxed">{post.excerpt}</p>
                 </div>
 
-                {/* Content */}
+                
                 <div className="mb-12">
                     <div className="prose prose-lg max-w-none prose-invert">
                         <div className="whitespace-pre-wrap text-gray-100 leading-relaxed text-lg">
@@ -211,7 +209,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                     </div>
                 </div>
 
-                {/* Comments Section */}
+                
                 <div className="border-t border-gray-700/50 pt-8">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                         <h3 className="text-2xl font-semibold text-white flex items-center gap-3">
@@ -231,7 +229,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                         </button>
                     </div>
 
-                    {/* Comment Form */}
+                    
                     {showCommentForm && (
                         <div className="mb-8 p-6 bg-gray-900/30 rounded-xl border border-gray-700/50">
                             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
@@ -287,7 +285,7 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
                         </div>
                     )}
 
-                    {/* Comments List */}
+                    
                     <div className="space-y-4">
                         {loading ? (
                             <div className="flex justify-center py-12">
@@ -328,4 +326,4 @@ export default function PostDetail({ post, onEdit, onClose, onPostUpdate }: Post
             </div>
         </div>
     );
-} 
+}

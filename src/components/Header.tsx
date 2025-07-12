@@ -45,20 +45,16 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
         { key: '/about', label: 'About', path: '/about' },
     ];
 
-    // Определяем текущую страницу
-    const getCurrentPage = () => {
-        if (pathname?.startsWith('/blog')) return '/blog';
-        return pathname;
-    };
 
-    const currentPage = getCurrentPage();
+    const currentPage = pathname;
+    const isBlogListPage = pathname === '/blog';
 
     const headerBg = mobileFilterActive ? 'bg-gray-900' : 'bg-gray-900/95 backdrop-blur-sm';
     return (
         <header className={`${headerBg} border-b border-gray-800 sticky top-0 z-50`}>
-            <div className="max-w-full px-8 py-4">
-                <div className="flex items-center justify-between">
-                    {/* Logo */}
+            <div className="max-w-full px-4 sm:px-6 lg:px-8 py-3">
+                <div className="flex items-center justify-between gap-2">
+                    
                     <div className="flex items-center gap-3">
                         <Link
                             href="/blog"
@@ -69,8 +65,8 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
                         </Link>
                     </div>
 
-                    {/* Navigation */}
-                    <nav className="hidden md:flex items-center gap-8">
+                    
+                    <nav className="hidden md:flex items-center gap-6 lg:gap-8">
                         {navItems.map(item => (
                             <Link
                                 key={item.key}
@@ -85,8 +81,8 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
                         ))}
                     </nav>
 
-                    {/* Search */}
-                    {currentPage === '/blog' && (
+                    
+                    {isBlogListPage && (
                         <div className="hidden lg:flex items-center gap-4 flex-1 max-w-md mx-8">
                             <div className="relative flex-1">
                                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -101,10 +97,10 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
                         </div>
                     )}
 
-                    {/* Right Side */}
-                    <div className="flex items-center gap-4">
-                        {/* Mobile Filter Button */}
-                        {currentPage === '/blog' && (
+                    
+                    <div className="flex items-center gap-2 sm:gap-4">
+                        
+                        {isBlogListPage && (
                             <button
                                 onClick={() => {
                                     console.log('Mobile filter button clicked');
@@ -120,8 +116,8 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
                             <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
                         ) : user ? (
                             <div className="flex items-center gap-3">
-                                {/* Create Post Button for authenticated users */}
-                                {currentPage === '/blog' && (
+                                
+                                {isBlogListPage && (
                                     <button
                                         onClick={handleCreatePost}
                                         className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
@@ -146,4 +142,4 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
             </div>
         </header>
     );
-} 
+}

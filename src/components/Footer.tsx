@@ -16,10 +16,10 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 mt-20">
-            <div className="max-w-6xl mx-auto px-8 py-12">
+        <footer className="bg-gray-900/95 backdrop-blur-sm border-t border-gray-800 mt-16 sm:mt-20">
+            <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
                 {/* Social Links */}
-                <div className="flex justify-center gap-6 mb-8">
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-6 sm:mb-8">
                     {socialLinks.map((link, index) => (
                         <a
                             key={index}
@@ -28,13 +28,13 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <link.icon className="w-5 h-5" />
+                            <link.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </a>
                     ))}
                 </div>
 
                 {/* Copyright */}
-                <div className="text-center text-gray-400 text-sm">
+                <div className="text-center text-gray-400 text-xs sm:text-sm">
                     <p className="mb-2">
                         <span className="font-medium">Oleh Poiasnik</span> • © 2025 • KITBLOG
                     </p>

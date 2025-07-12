@@ -5,7 +5,6 @@ import Header from './Header';
 import Footer from './Footer';
 import AuthModal from './AuthModal';
 
-// Создаем контекст для состояния сайдбара
 interface SidebarContextType {
     isSidebarOpen: boolean;
     onSidebarToggle: (isOpen: boolean) => void;
@@ -39,13 +38,13 @@ export default function LayoutContent({ children }: LayoutContentProps) {
 
     return (
         <SidebarContext.Provider value={{ isSidebarOpen, onSidebarToggle: handleSidebarToggle }}>
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+            <div className="min-h-screen flex flex-col overflow-x-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
                 <Header
                     onSignInClick={handleSignInClick}
                     onMobileFilterClick={() => setIsSidebarOpen(prev => !prev)}
                     mobileFilterActive={isSidebarOpen}
                 />
-                <main className="min-h-screen">
+                <main className="flex-1">
                     {children}
                 </main>
                 <Footer />
@@ -57,4 +56,4 @@ export default function LayoutContent({ children }: LayoutContentProps) {
             </div>
         </SidebarContext.Provider>
     );
-} 
+}

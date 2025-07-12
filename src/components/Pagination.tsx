@@ -36,7 +36,7 @@ export default function Pagination({
             pages.push(1);
 
             if (currentPage > 3) {
-                pages.push(-1); // Для отображения ...
+                pages.push(-1);
             }
 
             const start = Math.max(2, currentPage - 1);
@@ -49,7 +49,7 @@ export default function Pagination({
             }
 
             if (currentPage < totalPages - 2) {
-                pages.push(-1); // Для отображения ...
+                pages.push(-1);
             }
 
             pages.push(totalPages);
@@ -59,19 +59,16 @@ export default function Pagination({
     };
 
     return (
-        <div className="flex items-center justify-between px-8 py-6 border-t border-gray-800/50 bg-gray-900/30 backdrop-blur-sm">
-            {/* Информация о текущих элементах */}
-            <div className="text-sm text-gray-400">
+        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 px-4 sm:px-8 py-4 sm:py-6 border-t border-gray-800/50 bg-gray-900/30 backdrop-blur-sm text-sm">
+            <div className="text-gray-400">
                 Showing {startItem} to {endItem} of {totalItems} posts
             </div>
 
-            {/* Навигация */}
-            <div className="flex items-center gap-2">
-                {/* Предыдущая страница */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
                 <button
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage === 1
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${currentPage === 1
                         ? 'text-gray-500 cursor-not-allowed'
                         : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                         }`}
@@ -80,13 +77,12 @@ export default function Pagination({
                     Previous
                 </button>
 
-                {/* Номера страниц */}
                 <div className="flex items-center gap-1">
                     {getPageNumbers().map((page, index) => (
                         <button
                             key={index}
                             onClick={() => page !== -1 && onPageChange(page)}
-                            className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 ${page === currentPage
+                            className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${page === currentPage
                                 ? 'bg-blue-600 text-white'
                                 : page === -1
                                     ? 'text-gray-500 cursor-default'
@@ -98,11 +94,10 @@ export default function Pagination({
                     ))}
                 </div>
 
-                {/* Следующая страница */}
                 <button
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage === totalPages
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${currentPage === totalPages
                         ? 'text-gray-500 cursor-not-allowed'
                         : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                         }`}
@@ -113,4 +108,4 @@ export default function Pagination({
             </div>
         </div>
     );
-} 
+}

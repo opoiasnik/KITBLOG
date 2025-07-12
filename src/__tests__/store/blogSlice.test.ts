@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import blogSlice, { setFilter, clearFilter } from '@/store/blogSlice';
 
-// Mock Firebase
 jest.mock('firebase/firestore', () => ({
   collection: jest.fn(),
   doc: jest.fn(),
@@ -21,7 +20,6 @@ jest.mock('@/lib/firebase', () => ({
   db: {},
 }));
 
-// Create test store
 const createTestStore = () => {
   return configureStore({
     reducer: {
@@ -65,10 +63,8 @@ describe('blogSlice', () => {
     });
 
     test('should update existing filter', () => {
-      // First set initial filter
       store.dispatch(setFilter({ tags: ['javascript'] }));
       
-      // Then update with new filter
       store.dispatch(setFilter({ author: 'testuser' }));
 
       const state = store.getState().blog;
@@ -78,7 +74,6 @@ describe('blogSlice', () => {
 
   describe('clearFilter action', () => {
     test('should clear all filters', () => {
-      // First set some filters
       store.dispatch(setFilter({
         tags: ['javascript', 'react'],
         author: 'testuser',
@@ -86,7 +81,6 @@ describe('blogSlice', () => {
         searchTerm: 'test search',
       }));
 
-      // Then clear filters
       store.dispatch(clearFilter());
 
       const state = store.getState().blog;
@@ -138,4 +132,4 @@ describe('blogSlice', () => {
       expect(state.filter.searchTerm).toBe('');
     });
   });
-}); 
+});

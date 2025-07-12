@@ -59,7 +59,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-md w-full mx-4 relative">
-                {/* Close Button */}
+                
                 <button
                     onClick={handleClose}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -67,13 +67,13 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     <X className="w-6 h-6" />
                 </button>
 
-                {/* Header */}
+                
                 <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold text-white mb-2">Welcome</h2>
                     <p className="text-gray-400">Sign in to create and manage your blog posts</p>
                 </div>
 
-                {/* Error Display */}
+                
                 {error && (
                     <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-xl">
                         <div className="flex items-center gap-3">
@@ -85,9 +85,9 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     </div>
                 )}
 
-                {/* OAuth Buttons */}
+                
                 <div className="space-y-4">
-                    {/* Google Sign In */}
+                    
                     <button
                         onClick={handleGoogleSignIn}
                         disabled={loading || authLoading !== null}
@@ -101,7 +101,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         {authLoading === 'google' ? 'Signing in...' : 'Continue with Google'}
                     </button>
 
-                    {/* GitHub Sign In */}
+                    
                     <button
                         onClick={handleGitHubSignIn}
                         disabled={loading || authLoading !== null}
@@ -115,7 +115,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         {authLoading === 'github' ? 'Signing in...' : 'Continue with GitHub'}
                     </button>
 
-                    {/* Divider */}
+                    
                     <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-700"></div>
@@ -125,7 +125,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         </div>
                     </div>
 
-                    {/* Guest Sign In */}
+                    
                     <button
                         onClick={handleGuestSignIn}
                         disabled={loading || authLoading !== null}
@@ -140,7 +140,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     </button>
                 </div>
 
-                {/* Footer */}
+                
                 <div className="mt-8 text-center">
                     <p className="text-sm text-gray-500">
                         By continuing, you agree to our Terms of Service and Privacy Policy
@@ -149,4 +149,4 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
         </div>
     );
-} 
+}

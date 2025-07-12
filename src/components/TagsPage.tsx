@@ -5,7 +5,7 @@ import { useAppSelector } from '@/hooks/redux';
 export default function TagsPage() {
     const { posts } = useAppSelector(state => state.blog);
 
-    // Подсчет тегов
+    
     const tagCounts = posts.reduce((acc, post) => {
         post.tags.forEach(tag => {
             acc[tag] = (acc[tag] || 0) + 1;
@@ -62,4 +62,4 @@ export default function TagsPage() {
             )}
         </div>
     );
-} 
+}

@@ -23,7 +23,7 @@ export default function BlogPage() {
     const [filterKey, setFilterKey] = useState(0);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-    // Определяем текущий режим на основе пути
+    
     const getCurrentMode = () => {
         const path = location.pathname;
         if (path === '/blog/create') return 'create';
@@ -34,16 +34,16 @@ export default function BlogPage() {
 
     const currentMode = getCurrentMode();
 
-    // Загружаем все посты при загрузке компонента
+    
     useEffect(() => {
         dispatch(fetchPosts());
     }, [dispatch]);
 
-    // Фильтруем посты на клиенте
+    
     const filteredPosts = useMemo(() => {
         let filtered = posts;
 
-        // Применяем фильтры из Redux store
+        
         if (filter.isPublished !== undefined) {
             filtered = filtered.filter(post => post.isPublished === filter.isPublished);
         }
@@ -58,7 +58,7 @@ export default function BlogPage() {
             );
         }
 
-        // Применяем поиск
+        
         if (searchTerm) {
             const searchLower = searchTerm.toLowerCase();
             filtered = filtered.filter(post =>
@@ -72,7 +72,7 @@ export default function BlogPage() {
         return filtered;
     }, [posts, filter, searchTerm]);
 
-    // Сбрасываем пагинацию при изменении фильтров или поиска
+    
     useEffect(() => {
         setFilterKey(prev => prev + 1);
     }, [filter, searchTerm]);
@@ -102,17 +102,17 @@ export default function BlogPage() {
     };
 
     const handleFilterChange = () => {
-        // Callback для изменений фильтров
+        
     };
 
-    // Находим текущий пост для редактирования или просмотра
+    
     const currentPost: BlogPost | undefined = id ? posts.find(post => post.id === id) : undefined;
 
     const renderContent = () => {
         switch (currentMode) {
             case 'create':
                 return (
-                    <div className="max-w-4xl mx-auto px-8 py-8">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
                         <PostForm
                             onCancel={handleFormCancel}
                             onSuccess={handleFormSuccess}
@@ -122,7 +122,7 @@ export default function BlogPage() {
 
             case 'edit':
                 return currentPost ? (
-                    <div className="max-w-4xl mx-auto px-8 py-8">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
                         <PostForm
                             post={currentPost}
                             onCancel={handleFormCancel}
@@ -130,7 +130,7 @@ export default function BlogPage() {
                         />
                     </div>
                 ) : (
-                    <div className="max-w-4xl mx-auto px-8 py-8">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
                         <div className="text-center text-white">
                             <h2 className="text-2xl font-bold mb-4">Post not found</h2>
                             <button
@@ -145,7 +145,7 @@ export default function BlogPage() {
 
             case 'detail':
                 return currentPost ? (
-                    <div className="max-w-4xl mx-auto px-8 py-8">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
                         <PostDetail
                             post={currentPost}
                             onEdit={handleEditPost}
@@ -154,7 +154,7 @@ export default function BlogPage() {
                         />
                     </div>
                 ) : (
-                    <div className="max-w-4xl mx-auto px-8 py-8">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
                         <div className="text-center text-white">
                             <h2 className="text-2xl font-bold mb-4">Post not found</h2>
                             <button
@@ -170,9 +170,9 @@ export default function BlogPage() {
             default:
                 return (
                     <div className="flex min-h-screen">
-                        <Sidebar 
-                            onFilterChange={handleFilterChange} 
-                            onClick={() => {}} 
+                        <Sidebar
+                            onFilterChange={handleFilterChange}
+                            onClick={() => { }}
                             isOpen={true}
                         />
                         <PostGrid
@@ -196,4 +196,4 @@ export default function BlogPage() {
             />
         </>
     );
-} 
+}

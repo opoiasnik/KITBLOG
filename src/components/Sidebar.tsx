@@ -24,17 +24,17 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
     const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [isAuthorModalOpen, setIsAuthorModalOpen] = useState(false);
 
-    // Используем все посты из Redux store (теперь они всегда содержат все посты)
+    
     const allPosts = posts;
 
-    // Синхронизируем локальное состояние с Redux store
+    
     useEffect(() => {
         setSelectedTags(filter.tags || []);
         setSelectedAuthor(filter.author || '');
         setShowOnlyPublished(filter.isPublished !== false);
     }, [filter]);
 
-    // Получаем все уникальные теги и авторов с подсчетом из ВСЕХ постов
+    
     const tagCounts = allPosts.reduce((acc, post) => {
         post.tags.forEach(tag => {
             acc[tag] = (acc[tag] || 0) + 1;
@@ -50,7 +50,7 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
     const allTags = Object.keys(tagCounts).sort();
     const allAuthors = Object.keys(authorCounts).sort();
 
-    // Ограничиваем количество отображаемых элементов
+    
     const MAX_VISIBLE_ITEMS = 5;
     const visibleTags = allTags.slice(0, MAX_VISIBLE_ITEMS);
     const visibleAuthors = allAuthors.slice(0, MAX_VISIBLE_ITEMS);
@@ -130,21 +130,22 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
 
     return (
         <>
-            {/* Mobile Overlay */}
+            
             {isOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                <div
+                    className="fixed inset-0 bg-black/50 z-30 md:hidden"
                     onClick={() => onClick(false)}
                 />
             )}
-            
-            <div 
-                onClick={() => onClick(false)} 
-                className={`fixed md:relative inset-y-0 left-0 z-50 w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen p-6 space-y-8 transition-transform duration-300 ease-in-out ${
-                    isOpen ? 'translate-x-0' : 'md:translate-x-0 -translate-x-full'
-                } ${className}`}
+
+            <div
+                onClick={() => onClick(false)}
+                className={`fixed md:relative inset-y-0 left-0 z-40 w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen space-y-8 transition-transform duration-300 ease-in-out
+                    ${isOpen ? 'translate-x-0' : 'md:translate-x-0 -translate-x-full'}
+                    overflow-y-auto md:overflow-visible pt-24 pb-24 md:pt-6 md:pb-6 p-6
+                    ${className}`}
             >
-                {/* Post Status Header */}
+                
                 <div>
                     <h2 className="text-xl font-bold text-white mb-4">POSTS</h2>
                     <div className="space-y-2">
@@ -169,7 +170,7 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
                     </div>
                 </div>
 
-                {/* Tags */}
+                
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-4">TAGS</h3>
                     <div className="space-y-2">
@@ -199,7 +200,7 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
                     </div>
                 </div>
 
-                {/* Authors */}
+                
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-4">AUTHORS</h3>
                     <div className="space-y-2">
@@ -229,7 +230,7 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
                     </div>
                 </div>
 
-                {/* Clear Filters */}
+                
                 {(selectedTags.length > 0 || selectedAuthor || !showOnlyPublished) && (
                     <div className="pt-4 border-t border-gray-800">
                         <button
@@ -242,7 +243,7 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
                 )}
             </div>
 
-            {/* Modals */}
+            
             <TagModal
                 isOpen={isTagModalOpen}
                 onClose={() => setIsTagModalOpen(false)}
@@ -264,4 +265,4 @@ export default function Sidebar({ onFilterChange, className, onClick, isOpen = t
             />
         </>
     );
-} 
+}

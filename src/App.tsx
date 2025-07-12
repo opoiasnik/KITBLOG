@@ -26,21 +26,21 @@ function AppContent() {
 
             <main className="min-h-screen">
                 <Routes>
-                    {/* Redirect root to blog */}
+                    
                     <Route path="/" element={<Navigate to="/blog" replace />} />
 
-                    {/* Blog routes */}
+                    
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/blog/create" element={<BlogPage />} />
                     <Route path="/blog/edit/:id" element={<BlogPage />} />
                     <Route path="/blog/post/:id" element={<BlogPage />} />
 
-                    {/* Other pages */}
+                    
                     <Route path="/tags" element={<TagsPage />} />
                     <Route path="/projects" element={<ProjectsPage />} />
                     <Route path="/about" element={<AboutPage />} />
 
-                    {/* Catch all - redirect to blog */}
+                    
                     <Route path="*" element={<Navigate to="/blog" replace />} />
                 </Routes>
             </main>
@@ -65,4 +65,4 @@ export default function App() {
             </AuthProvider>
         </ReduxProvider>
     );
-} 
+}

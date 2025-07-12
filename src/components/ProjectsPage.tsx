@@ -37,14 +37,14 @@ export default function ProjectsPage() {
                         key={project.id}
                         className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-xl overflow-hidden hover:bg-gray-900/70 hover:border-gray-700/50 transition-all duration-300 group"
                     >
-                        {/* Project Image */}
+                        
                         <div className={`h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
                             <div className="text-white text-6xl font-bold opacity-50">
                                 {project.id === 1 ? 'Google' : '⚙️'}
                             </div>
                         </div>
 
-                        {/* Project Content */}
+                        
                         <div className="p-6">
                             <div className="flex items-center justify-between mb-3">
                                 <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
@@ -57,7 +57,7 @@ export default function ProjectsPage() {
                                 {project.description}
                             </p>
 
-                            {/* Project Tags */}
+                            
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {project.tags.map(tag => (
                                     <span
@@ -81,4 +81,4 @@ export default function ProjectsPage() {
             </div>
         </div>
     );
-} 
+}

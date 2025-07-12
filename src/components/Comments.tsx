@@ -44,7 +44,7 @@ export default function Comments({ postId, comments }: CommentsProps) {
 
     return (
         <div className="space-y-6">
-            {/* Comment Form */}
+            
             {user && (
                 <form onSubmit={handleSubmitComment} className="space-y-4">
                     <div className="flex items-start gap-3">
@@ -82,7 +82,7 @@ export default function Comments({ postId, comments }: CommentsProps) {
                 </form>
             )}
 
-            {/* Comments List */}
+            
             <div className="space-y-4">
                 {comments.length === 0 ? (
                     <div className="text-center py-8">
@@ -115,4 +115,4 @@ export default function Comments({ postId, comments }: CommentsProps) {
             </div>
         </div>
     );
-} 
+}

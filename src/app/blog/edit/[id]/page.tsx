@@ -15,7 +15,8 @@ export default function EditPostPage() {
     const { currentPost, loading, error } = useAppSelector(state => state.blog);
     const { user } = useAuth();
 
-    const postId = params.id as string;
+    const rawId = params?.id;
+    const postId = Array.isArray(rawId) ? rawId[0] : (rawId ?? '');
 
     useEffect(() => {
         if (postId) {
@@ -86,7 +87,6 @@ export default function EditPostPage() {
         );
     }
 
-    // Проверка прав на редактирование
     if (user && (user.displayName !== currentPost.author && user.email !== currentPost.author)) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center p-8">
@@ -107,8 +107,8 @@ export default function EditPostPage() {
 
     return (
         <div className="min-h-screen bg-gray-950">
-            <div className="max-w-4xl mx-auto p-8">
-                {/* Header */}
+            <div className="max-w-4xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
+
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <button
@@ -139,7 +139,7 @@ export default function EditPostPage() {
                     </div>
                 </div>
 
-                {/* Edit Form */}
+
                 <PostForm
                     post={currentPost}
                     onCancel={handleCancel}
@@ -148,4 +148,4 @@ export default function EditPostPage() {
             </div>
         </div>
     );
-} 
+}

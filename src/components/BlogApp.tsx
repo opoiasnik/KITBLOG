@@ -15,7 +15,6 @@ import ProjectsPage from './ProjectsPage';
 import AboutPage from './AboutPage';
 import Footer from './Footer';
 import AuthModal from './AuthModal';
-import MobileFilterModal from './MobileFilterModal';
 
 type ViewMode = 'list' | 'create' | 'edit' | 'detail';
 type PageView = 'blog' | 'tags' | 'projects' | 'about';
@@ -28,20 +27,18 @@ function BlogAppContent() {
     const [currentPost, setCurrentPost] = useState<BlogPost | undefined>(undefined);
     const [currentPage, setCurrentPage] = useState<PageView>('blog');
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterKey, setFilterKey] = useState(0); // Для сброса пагинации при изменении фильтров
+    const [filterKey, setFilterKey] = useState(0);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-    // Загружаем ВСЕ посты при загрузке компонента (без фильтров)
+
     useEffect(() => {
-        dispatch(fetchPosts()); // Загружаем все посты
+        dispatch(fetchPosts());
     }, [dispatch]);
 
-    // Фильтруем посты на клиенте
     const filteredPosts = useMemo(() => {
         let filtered = posts;
 
-        // Применяем фильтры из Redux store
         if (filter.isPublished !== undefined) {
             filtered = filtered.filter(post => post.isPublished === filter.isPublished);
         }
@@ -56,7 +53,6 @@ function BlogAppContent() {
             );
         }
 
-        // Применяем поиск
         if (searchTerm) {
             const searchLower = searchTerm.toLowerCase();
             filtered = filtered.filter(post =>
@@ -70,7 +66,6 @@ function BlogAppContent() {
         return filtered;
     }, [posts, filter, searchTerm]);
 
-    // Сбрасываем пагинацию при изменении фильтров или поиска
     useEffect(() => {
         setFilterKey(prev => prev + 1);
     }, [filter, searchTerm]);
@@ -96,7 +91,6 @@ function BlogAppContent() {
     const handleFormSuccess = () => {
         setViewMode('list');
         setCurrentPost(undefined);
-        // Перезагружаем все посты после создания/обновления
         dispatch(fetchPosts());
     };
 
@@ -111,8 +105,7 @@ function BlogAppContent() {
     };
 
     const handleFilterChange = () => {
-        // Фильтры уже установлены в Redux через dispatch(setFilter) в Sidebar
-        // Фильтрация происходит через useMemo выше
+
     };
 
     const handlePageChange = (page: string) => {
@@ -139,10 +132,9 @@ function BlogAppContent() {
             case 'list':
                 return (
                     <div className="flex min-h-screen relative">
-                        {/* Универсальный Sidebar */}
-                        <Sidebar 
-                            onFilterChange={handleFilterChange} 
-                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)} 
+                        <Sidebar
+                            onFilterChange={handleFilterChange}
+                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)}
                             isOpen={isMobileFilterOpen}
                         />
                         <PostGrid
@@ -190,13 +182,13 @@ function BlogAppContent() {
             default:
                 return (
                     <div className="flex min-h-screen">
-                        <Sidebar 
-                            onFilterChange={handleFilterChange} 
-                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)} 
+                        <Sidebar
+                            onFilterChange={handleFilterChange}
+                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)}
                             isOpen={isMobileFilterOpen}
                         />
                         <PostGrid
-                            key={filterKey} // Принудительно сбрасываем компонент при изменении фильтров
+                            key={filterKey}
                             posts={filteredPosts}
                             onPostSelect={handleViewPost}
                             loading={loading}
@@ -239,4 +231,4 @@ export default function BlogApp() {
             <BlogAppContent />
         </AuthProvider>
     );
-} 
+}

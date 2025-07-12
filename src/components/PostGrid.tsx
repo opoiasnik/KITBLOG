@@ -23,7 +23,7 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
     const endIndex = startIndex + POSTS_PER_PAGE;
     const currentPosts = posts.slice(startIndex, endIndex);
 
-    // Сбрасываем страницу при изменении фильтров
+    
     useEffect(() => {
         setCurrentPage(1);
     }, [posts.length]);
@@ -50,7 +50,7 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
-        // Прокрутка к началу контента
+        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -93,15 +93,15 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
     }
 
     return (
-        <div className="flex-1 flex flex-col">
-            <div className="flex-1 p-8 space-y-6">
+        <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex-1 px-4 py-6 sm:p-8 space-y-4 sm:space-y-6">
                 {currentPosts.map(post => (
                     <article
                         key={post.id}
-                        className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-xl p-6 hover:bg-gray-900/70 hover:border-gray-700/50 transition-all duration-300 cursor-pointer group"
+                        className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-xl p-4 sm:p-6 hover:bg-gray-900/70 hover:border-gray-700/50 transition-all duration-300 cursor-pointer group"
                         onClick={() => onPostSelect(post)}
                     >
-                        {/* Post Header */}
+                        
                         <div className="flex items-start justify-between mb-4">
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2 text-sm text-gray-400">
@@ -116,13 +116,13 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
                                 </p>
                             </div>
                             {!post.isPublished && (
-                                <span className="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full border border-amber-500/30 font-medium ml-4">
+                                <span className="absolute sm:static top-3 right-3 sm:ml-4 px-2.5 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] sm:text-xs rounded-full border border-amber-500/30 font-medium">
                                     Draft
                                 </span>
                             )}
                         </div>
 
-                        {/* Post Tags */}
+                        
                         <div className="flex flex-wrap gap-2 mb-4">
                             {post.tags.map(tag => (
                                 <span
@@ -134,13 +134,13 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
                             ))}
                         </div>
 
-                        {/* Post Footer */}
-                        <div className="flex items-center justify-between text-sm text-gray-400 border-t border-gray-800/50 pt-4">
+                        
+                        <div className="flex flex-wrap items-center justify-between text-sm text-gray-400 border-t border-gray-800/50 pt-4 gap-2">
                             <div className="flex items-center gap-2">
                                 <User className="w-4 h-4" />
                                 <span className="uppercase">{post.author}</span>
                             </div>
-                            <div className="flex items-center gap-4">
+                            <div className="hidden sm:flex items-center gap-4">
                                 <span className="uppercase">{post.tags.join(', ')}</span>
                                 <span className="uppercase">{post.tags.length > 1 ? 'Guide' : 'Feature'}</span>
                             </div>
@@ -149,7 +149,7 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
                 ))}
             </div>
 
-            {/* Пагинация */}
+            
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -159,4 +159,4 @@ export default function PostGrid({ posts, onPostSelect, loading, error }: PostGr
             />
         </div>
     );
-} 
+}

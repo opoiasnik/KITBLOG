@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle, signInWithGitHub, logOut } from '@/lib/firebase';
 
-// Интерфейс для гостевого пользователя
+
 interface GuestUser {
     uid: string;
     displayName: string;
@@ -13,7 +13,7 @@ interface GuestUser {
     isGuest: true;
 }
 
-// Расширенный тип пользователя
+
 type AppUser = User | GuestUser | null;
 
 interface AuthContextType {
@@ -37,12 +37,12 @@ export const useAuth = () => {
     return context;
 };
 
-// Функция для создания гостевого пользователя
+
 const createGuestUser = (): GuestUser => {
     const guestId = `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const guestUser: GuestUser = {
         uid: guestId,
-        displayName: 'Гость',
+        displayName: 'Guest',
         email: 'guest@example.com',
         photoURL: '',
         isGuest: true,
@@ -50,7 +50,7 @@ const createGuestUser = (): GuestUser => {
     return guestUser;
 };
 
-// Функция для проверки, является ли пользователь гостем
+
 export const isGuestUser = (user: AppUser): user is GuestUser => {
     return user !== null && 'isGuest' in user && user.isGuest === true;
 };
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Проверяем localStorage на наличие гостевого пользователя
+        
         const checkGuestUser = () => {
             const guestData = localStorage.getItem('guestUser');
             if (guestData) {
@@ -81,14 +81,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             return false;
         };
 
-        // Сначала проверяем гостевого пользователя
+        
         const hasGuestUser = checkGuestUser();
 
-        // Если нет гостевого пользователя, проверяем Firebase auth
+        
         if (!hasGuestUser) {
             const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
                 if (firebaseUser) {
-                    // Убираем гостевого пользователя если есть Firebase пользователь
+                    
                     localStorage.removeItem('guestUser');
                 }
                 setUser(firebaseUser);
@@ -107,13 +107,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const authError = error as { code?: string };
 
         if (authError.code === 'auth/account-exists-with-different-credential') {
-            setError('Аккаунт с этим email уже существует. Попробуйте войти через другой способ (Google/GitHub).');
+            setError('An account with this email already exists. Try signing in with another provider (Google/GitHub).');
         } else if (authError.code === 'auth/popup-closed-by-user') {
-            setError('Окно авторизации было закрыто.');
+            setError('The sign-in popup was closed.');
         } else if (authError.code === 'auth/cancelled-popup-request') {
-            setError('Авторизация была отменена.');
+            setError('Authentication was cancelled.');
         } else {
-            setError('Произошла ошибка при авторизации. Попробуйте еще раз.');
+            setError('Authentication error. Please try again.');
         }
     };
 
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         try {
             setLoading(true);
             setError(null);
-            // Убираем гостевого пользователя перед входом через Google
+            
             localStorage.removeItem('guestUser');
             await signInWithGoogle();
         } catch (error) {
@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         try {
             setLoading(true);
             setError(null);
-            // Убираем гостевого пользователя перед входом через GitHub
+            
             localStorage.removeItem('guestUser');
             await signInWithGitHub();
         } catch (error) {
@@ -152,7 +152,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
             const guestUser = createGuestUser();
 
-            // Сохраняем гостевого пользователя в localStorage
+            
             localStorage.setItem('guestUser', JSON.stringify(guestUser));
 
             setUser(guestUser);
@@ -168,14 +168,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             setLoading(true);
             setError(null);
 
-            // Убираем гостевого пользователя из localStorage
+            
             localStorage.removeItem('guestUser');
 
-            // Если это Firebase пользователь, выходим из Firebase
+            
             if (user && !isGuestUser(user)) {
                 await logOut();
             } else {
-                // Для гостевого пользователя просто обнуляем состояние
+                
                 setUser(null);
             }
         } catch (error) {
@@ -197,4 +197,4 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}; 
+};

@@ -162,4 +162,4 @@ describe('Type Interfaces', () => {
       expect(filterOptions.searchTerm).toBe('');
     });
   });
-}); 
+});

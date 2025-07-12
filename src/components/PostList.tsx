@@ -20,7 +20,7 @@ export default function PostList({ onPostSelect }: PostListProps) {
     const [showOnlyPublished, setShowOnlyPublished] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
 
-    // Получаем все уникальные теги и авторов
+    
     const allTags = Array.from(new Set(posts.flatMap(post => post.tags)));
     const allAuthors = Array.from(new Set(posts.map(post => post.author)));
 
@@ -83,7 +83,7 @@ export default function PostList({ onPostSelect }: PostListProps) {
 
     return (
         <div className="space-y-6">
-            {/* Search and Filters */}
+            
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 shadow-xl">
                 <div className="flex flex-col md:flex-row gap-4 mb-4">
                     <div className="flex-1 relative">
@@ -170,7 +170,7 @@ export default function PostList({ onPostSelect }: PostListProps) {
                 )}
             </div>
 
-            {/* Posts List */}
+            
             <div className="space-y-4">
                 {posts.length === 0 ? (
                     <div className="text-center py-16">
@@ -236,4 +236,4 @@ export default function PostList({ onPostSelect }: PostListProps) {
             </div>
         </div>
     );
-} 
+}

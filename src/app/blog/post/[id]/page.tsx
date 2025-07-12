@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { fetchPostById, fetchComments } from '@/store/blogSlice';
+import { fetchPostById, fetchComments, deletePost } from '@/store/blogSlice';
 import { format } from 'date-fns';
 import { Calendar, User, ArrowLeft, MessageCircle, Edit3 } from 'lucide-react';
 import Comments from '@/components/Comments';
@@ -17,7 +17,8 @@ export default function PostPage() {
     const { user } = useAuth();
     const [showComments, setShowComments] = useState(false);
 
-    const postId = params.id as string;
+    const raw = params?.id;
+    const postId = Array.isArray(raw) ? raw[0] : (raw ?? '');
 
     useEffect(() => {
         if (postId) {
@@ -48,6 +49,18 @@ export default function PostPage() {
 
     const handleEditPost = () => {
         router.push(`/blog/edit/${postId}`);
+    };
+
+    const handleDeletePost = async () => {
+        if (!postId) return;
+        const confirmDelete = window.confirm('Delete this post? This action cannot be undone.');
+        if (!confirmDelete) return;
+        try {
+            await dispatch(deletePost(postId)).unwrap();
+            router.push('/blog');
+        } catch (err) {
+            console.error('Failed to delete post', err);
+        }
     };
 
     const handleBackClick = () => {
@@ -108,7 +121,7 @@ export default function PostPage() {
     return (
         <div className="min-h-screen bg-gray-950">
             <div className="max-w-4xl mx-auto p-8">
-                {/* Header */}
+
                 <div className="flex items-center gap-4 mb-8">
                     <button
                         onClick={handleBackClick}
@@ -119,9 +132,9 @@ export default function PostPage() {
                     <h1 className="text-lg font-medium text-gray-300">Blog Post</h1>
                 </div>
 
-                {/* Post Content */}
+
                 <article className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-xl p-8 mb-8">
-                    {/* Post Header */}
+
                     <div className="flex items-start justify-between mb-6">
                         <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3 text-sm text-gray-400">
@@ -155,18 +168,27 @@ export default function PostPage() {
                                 </span>
                             )}
                             {user && (user.displayName === currentPost.author || user.email === currentPost.author) && (
-                                <button
-                                    onClick={handleEditPost}
-                                    className="p-2 hover:bg-gray-800 rounded-lg transition-colors group"
-                                    title="Edit Post"
-                                >
-                                    <Edit3 className="w-5 h-5 text-gray-400 group-hover:text-white" />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={handleEditPost}
+                                        className="p-2 hover:bg-gray-800 rounded-lg transition-colors group"
+                                        title="Edit Post"
+                                    >
+                                        <Edit3 className="w-5 h-5 text-gray-400 group-hover:text-white" />
+                                    </button>
+                                    <button
+                                        onClick={handleDeletePost}
+                                        className="p-2 hover:bg-gray-800 rounded-lg transition-colors group"
+                                        title="Delete Post"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-red-400 group-hover:text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" /><path d="M10 11v6" /><path d="M14 11v6" /><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" /></svg>
+                                    </button>
+                                </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Post Tags */}
+
                     <div className="flex flex-wrap gap-2 mb-6">
                         {currentPost.tags.map(tag => (
                             <span
@@ -178,7 +200,7 @@ export default function PostPage() {
                         ))}
                     </div>
 
-                    {/* Post Content */}
+
                     <div className="prose prose-invert max-w-none">
                         <div className="text-gray-300 leading-relaxed whitespace-pre-wrap">
                             {currentPost.content}
@@ -186,7 +208,7 @@ export default function PostPage() {
                     </div>
                 </article>
 
-                {/* Comments Section */}
+
                 <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-xl p-6">
                     <button
                         onClick={() => setShowComments(!showComments)}
@@ -212,4 +234,4 @@ export default function PostPage() {
             </div>
         </div>
     );
-} 
+}
