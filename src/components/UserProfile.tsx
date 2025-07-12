@@ -59,7 +59,7 @@ export default function UserProfile() {
                 </span>
                 {isGuest && (
                     <span className="hidden sm:inline text-xs text-gray-400 bg-gray-700 px-2 py-1 rounded">
-                        Гость
+                        Guest
                     </span>
                 )}
                 <ChevronDown className="w-4 h-4 text-gray-400" />
@@ -85,7 +85,7 @@ export default function UserProfile() {
                                     {displayName}
                                     {isGuest && (
                                         <span className="ml-2 text-xs text-gray-400 bg-gray-700 px-2 py-1 rounded">
-                                            Гость
+                                            Guest
                                         </span>
                                     )}
                                 </h3>
@@ -94,7 +94,7 @@ export default function UserProfile() {
                                 )}
                                 {isGuest && (
                                     <p className="text-sm text-gray-400">
-                                        Временный аккаунт
+                                        Temporary account
                                     </p>
                                 )}
                             </div>
