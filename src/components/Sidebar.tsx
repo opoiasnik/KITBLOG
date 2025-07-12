@@ -10,9 +10,11 @@ import AuthorModal from './AuthorModal';
 
 interface SidebarProps {
     onFilterChange: () => void;
+    className?: string;
 }
 
-export default function Sidebar({ onFilterChange }: SidebarProps) {
+export default function Sidebar({ onFilterChange, className = "" }: SidebarProps) {
+    console.log('Sidebar className:', className);
     const dispatch = useAppDispatch();
     const { posts, filter } = useAppSelector(state => state.blog);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -127,7 +129,7 @@ export default function Sidebar({ onFilterChange }: SidebarProps) {
 
     return (
         <>
-            <div className="w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen p-6 space-y-8">
+            <div className={`w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen p-6 space-y-8 ${className}`}>
                 {/* Post Status Header */}
                 <div>
                     <h2 className="text-xl font-bold text-white mb-4">POSTS</h2>

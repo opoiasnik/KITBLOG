@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, PlusCircle, LogIn } from 'lucide-react';
+import { Search, PlusCircle, LogIn, Filter as FilterIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import UserProfile from './UserProfile';
 
@@ -11,9 +11,13 @@ interface HeaderProps {
     onSignInClick: () => void;
     searchTerm?: string;
     onSearchChange?: (term: string) => void;
+    currentView?: string;
+    onViewChange?: (page: string) => void;
+    onMobileFilterClick?: () => void;
+    mobileFilterActive?: boolean;
 }
 
-export default function Header({ onSignInClick, searchTerm = '', onSearchChange }: HeaderProps) {
+export default function Header({ onSignInClick, searchTerm = '', onSearchChange, onMobileFilterClick, mobileFilterActive }: HeaderProps) {
     const router = useRouter();
     const pathname = usePathname();
     const { user, loading } = useAuth();
@@ -49,8 +53,9 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange 
 
     const currentPage = getCurrentPage();
 
+    const headerBg = mobileFilterActive ? 'bg-red-600' : 'bg-gray-900/95 backdrop-blur-sm';
     return (
-        <header className="bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+        <header className={`${headerBg} border-b border-gray-800 sticky top-0 z-50`}>
             <div className="max-w-full px-8 py-4">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
@@ -98,6 +103,19 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange 
 
                     {/* Right Side */}
                     <div className="flex items-center gap-4">
+                        {/* Mobile Filter Button */}
+                        {currentPage === '/blog' && (
+                            <button
+                                onClick={() => {
+                                    console.log('Mobile filter button clicked');
+                                    onMobileFilterClick?.();
+                                }}
+                                className="md:hidden flex items-center justify-center p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                                aria-label="Filters"
+                            >
+                                <FilterIcon className="h-5 w-5" />
+                            </button>
+                        )}
                         {loading ? (
                             <div className="w-8 h-8 rounded-full bg-gray-700 animate-pulse"></div>
                         ) : user ? (

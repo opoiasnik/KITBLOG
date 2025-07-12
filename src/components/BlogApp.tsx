@@ -15,13 +15,14 @@ import ProjectsPage from './ProjectsPage';
 import AboutPage from './AboutPage';
 import Footer from './Footer';
 import AuthModal from './AuthModal';
+import MobileFilterModal from './MobileFilterModal';
 
 type ViewMode = 'list' | 'create' | 'edit' | 'detail';
 type PageView = 'blog' | 'tags' | 'projects' | 'about';
 
 function BlogAppContent() {
     const dispatch = useAppDispatch();
-    const { posts, loading, error, filter } = useAppSelector(state => state.blog);
+    const { posts, loading, filter } = useAppSelector(state => state.blog);
     const { user } = useAuth();
     const [viewMode, setViewMode] = useState<ViewMode>('list');
     const [currentPost, setCurrentPost] = useState<BlogPost | undefined>(undefined);
@@ -29,6 +30,7 @@ function BlogAppContent() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterKey, setFilterKey] = useState(0); // Для сброса пагинации при изменении фильтров
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
     // Загружаем ВСЕ посты при загрузке компонента (без фильтров)
     useEffect(() => {
@@ -73,15 +75,6 @@ function BlogAppContent() {
         setFilterKey(prev => prev + 1);
     }, [filter, searchTerm]);
 
-    const handleCreatePost = () => {
-        if (!user) {
-            setIsAuthModalOpen(true);
-            return;
-        }
-        setCurrentPost(undefined);
-        setViewMode('create');
-    };
-
     const handleSignInClick = () => {
         setIsAuthModalOpen(true);
     };
@@ -122,8 +115,8 @@ function BlogAppContent() {
         // Фильтрация происходит через useMemo выше
     };
 
-    const handlePageChange = (page: PageView) => {
-        setCurrentPage(page);
+    const handlePageChange = (page: string) => {
+        setCurrentPage(page as PageView);
         setViewMode('list');
         setCurrentPost(undefined);
     };
@@ -145,14 +138,21 @@ function BlogAppContent() {
         switch (viewMode) {
             case 'list':
                 return (
-                    <div className="flex min-h-screen">
-                        <Sidebar onFilterChange={handleFilterChange} />
+                    <div className="flex flex-col md:flex-row min-h-screen relative">
+                        {/* Sidebar для md+ */}
+                        <Sidebar onFilterChange={handleFilterChange} className="hidden md:block" />
+
+                        {/* Mobile Filters Modal */}
+                        <MobileFilterModal
+                            isOpen={isMobileFilterOpen}
+                            onClose={() => setIsMobileFilterOpen(false)}
+                            onFilterChange={handleFilterChange}
+                        />
                         <PostGrid
-                            key={filterKey} // Принудительно сбрасываем компонент при изменении фильтров
+                            key={filterKey}
                             posts={filteredPosts}
                             onPostSelect={handleViewPost}
                             loading={loading}
-                            error={error}
                         />
                     </div>
                 );
@@ -199,7 +199,7 @@ function BlogAppContent() {
                             posts={filteredPosts}
                             onPostSelect={handleViewPost}
                             loading={loading}
-                            error={error}
+
                         />
                     </div>
                 );
@@ -209,12 +209,13 @@ function BlogAppContent() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
             <Header
-                onCreatePost={handleCreatePost}
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
                 currentView={currentPage}
                 onViewChange={handlePageChange}
                 onSignInClick={handleSignInClick}
+                onMobileFilterClick={() => setIsMobileFilterOpen(prev => !prev)}
+                mobileFilterActive={isMobileFilterOpen}
             />
 
             <main className="min-h-screen">
