@@ -2,8 +2,6 @@
 
 Modern blog platform built with **Next.js 15** (App Router) + **React 19**, powered by **Firebase** and **Redux Toolkit**.
 
-![KITBLOG screenshot](public/vercel.svg)
-
 ---
 
 ## Features
