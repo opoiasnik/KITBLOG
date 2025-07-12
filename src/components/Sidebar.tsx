@@ -11,10 +11,11 @@ import AuthorModal from './AuthorModal';
 interface SidebarProps {
     onFilterChange: () => void;
     className?: string;
+    onClick: (isOpen: boolean) => void;
+    isOpen?: boolean;
 }
 
-export default function Sidebar({ onFilterChange, className = "" }: SidebarProps) {
-    console.log('Sidebar className:', className);
+export default function Sidebar({ onFilterChange, className, onClick, isOpen = true }: SidebarProps) {
     const dispatch = useAppDispatch();
     const { posts, filter } = useAppSelector(state => state.blog);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -129,7 +130,20 @@ export default function Sidebar({ onFilterChange, className = "" }: SidebarProps
 
     return (
         <>
-            <div className={`w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen p-6 space-y-8 ${className}`}>
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                    onClick={() => onClick(false)}
+                />
+            )}
+            
+            <div 
+                onClick={() => onClick(false)} 
+                className={`fixed md:relative inset-y-0 left-0 z-50 w-80 bg-gray-900/95 backdrop-blur-sm border-r border-gray-800 min-h-screen p-6 space-y-8 transition-transform duration-300 ease-in-out ${
+                    isOpen ? 'translate-x-0' : 'md:translate-x-0 -translate-x-full'
+                } ${className}`}
+            >
                 {/* Post Status Header */}
                 <div>
                     <h2 className="text-xl font-bold text-white mb-4">POSTS</h2>

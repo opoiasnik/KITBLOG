@@ -53,7 +53,7 @@ export default function Header({ onSignInClick, searchTerm = '', onSearchChange,
 
     const currentPage = getCurrentPage();
 
-    const headerBg = mobileFilterActive ? 'bg-red-600' : 'bg-gray-900/95 backdrop-blur-sm';
+    const headerBg = mobileFilterActive ? 'bg-gray-900' : 'bg-gray-900/95 backdrop-blur-sm';
     return (
         <header className={`${headerBg} border-b border-gray-800 sticky top-0 z-50`}>
             <div className="max-w-full px-8 py-4">

@@ -170,13 +170,17 @@ export default function BlogPage() {
             default:
                 return (
                     <div className="flex min-h-screen">
-                        <Sidebar onFilterChange={handleFilterChange} />
+                        <Sidebar 
+                            onFilterChange={handleFilterChange} 
+                            onClick={() => {}} 
+                            isOpen={true}
+                        />
                         <PostGrid
                             key={filterKey}
                             posts={filteredPosts}
                             onPostSelect={handleViewPost}
                             loading={loading}
-                            error={error}
+                            error={error || undefined}
                         />
                     </div>
                 );

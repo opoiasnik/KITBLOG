@@ -138,15 +138,12 @@ function BlogAppContent() {
         switch (viewMode) {
             case 'list':
                 return (
-                    <div className="flex flex-col md:flex-row min-h-screen relative">
-                        {/* Sidebar для md+ */}
-                        <Sidebar onFilterChange={handleFilterChange} className="hidden md:block" />
-
-                        {/* Mobile Filters Modal */}
-                        <MobileFilterModal
+                    <div className="flex min-h-screen relative">
+                        {/* Универсальный Sidebar */}
+                        <Sidebar 
+                            onFilterChange={handleFilterChange} 
+                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)} 
                             isOpen={isMobileFilterOpen}
-                            onClose={() => setIsMobileFilterOpen(false)}
-                            onFilterChange={handleFilterChange}
                         />
                         <PostGrid
                             key={filterKey}
@@ -193,7 +190,11 @@ function BlogAppContent() {
             default:
                 return (
                     <div className="flex min-h-screen">
-                        <Sidebar onFilterChange={handleFilterChange} />
+                        <Sidebar 
+                            onFilterChange={handleFilterChange} 
+                            onClick={(isOpen) => setIsMobileFilterOpen(isOpen)} 
+                            isOpen={isMobileFilterOpen}
+                        />
                         <PostGrid
                             key={filterKey} // Принудительно сбрасываем компонент при изменении фильтров
                             posts={filteredPosts}

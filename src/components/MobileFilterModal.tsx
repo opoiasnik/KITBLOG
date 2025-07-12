@@ -32,7 +32,12 @@ export default function MobileFilterModal({ isOpen, onClose, onFilterChange }: M
                 </button>
 
                 {/* Sidebar content (filters) */}
-                <Sidebar onFilterChange={onFilterChange} className="block" />
+                <Sidebar 
+                    onFilterChange={onFilterChange} 
+                    className="block" 
+                    onClick={() => {}} 
+                    isOpen={true}
+                />
             </div>
         </div>
     );

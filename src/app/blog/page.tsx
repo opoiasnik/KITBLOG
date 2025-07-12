@@ -7,15 +7,15 @@ import { fetchPosts } from '@/store/blogSlice';
 import { BlogPost } from '@/types';
 import Sidebar from '@/components/Sidebar';
 import PostGrid from '@/components/PostGrid';
-import AuthModal from '@/components/AuthModal';
+import { useSidebar } from '@/components/LayoutContent';
 
 export default function BlogPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { posts, loading, error, filter } = useAppSelector(state => state.blog);
+    const { isSidebarOpen, onSidebarToggle } = useSidebar();
     const [searchTerm] = useState('');
     const [filterKey, setFilterKey] = useState(0);
-    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
     // Загружаем все посты при загрузке компонента
     useEffect(() => {
@@ -71,21 +71,19 @@ export default function BlogPage() {
     };
 
     return (
-        <>
-            <div className="flex min-h-screen">
-                <Sidebar onFilterChange={handleFilterChange} />
-                <PostGrid
-                    key={filterKey}
-                    posts={filteredPosts}
-                    onPostSelect={handleViewPost}
-                    loading={loading}
-                    error={error}
-                />
-            </div>
-            <AuthModal
-                isOpen={isAuthModalOpen}
-                onClose={() => setIsAuthModalOpen(false)}
+        <div className="flex min-h-screen">
+            <Sidebar 
+                onClick={onSidebarToggle} 
+                onFilterChange={handleFilterChange} 
+                isOpen={isSidebarOpen}
             />
-        </>
+            <PostGrid
+                key={filterKey}
+                posts={filteredPosts}
+                onPostSelect={handleViewPost}
+                loading={loading}
+                error={error || undefined}
+            />
+        </div>
     );
 } 
