@@ -2,16 +2,16 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, User } from "firebase/auth";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyATrpFr8waZWeZnVbZGosVxgdLAOxF9YbY",
-    authDomain: "kitglobal-88e0e.firebaseapp.com",
-    projectId: "kitglobal-88e0e",
-    storageBucket: "kitglobal-88e0e.firebasestorage.app",
-    messagingSenderId: "857636859459",
-    appId: "1:857636859459:web:396f7e98845d3530ef2ef6",
-    measurementId: "G-QVWW57BHMH"
-};
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!,
+  };
+  
 
 
 const app = initializeApp(firebaseConfig);
